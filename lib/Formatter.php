@@ -38,16 +38,16 @@ abstract class Formatter extends BaseFormatter
     protected function init()
     {
         parent::init();
-        $this->addConfigurations(array(
+        $this->addConfigurations([
             static::CFG_INDENTATION     => 4,
             static::CFG_CLASS_PREFIX    => '',
             static::CFG_PARENT_CLASS    => '',
-        ));
+        ]);
     }
 
     public function getVersion()
     {
-        return '3.1.1';
+        return '3.2.0';
     }
 
     /**

@@ -53,6 +53,6 @@ class Table extends BaseTable
      */
     public function getJSObject($content, $multiline = true, $raw = false)
     {
-        return new JS($content, array('multiline' => $multiline, 'raw' => $raw, 'indent' => $this->getConfig()->get(Formatter::CFG_INDENTATION))); 
+        return new JS($content, ['multiline' => $multiline, 'raw' => $raw, 'indent' => $this->getConfig()->get(Formatter::CFG_INDENTATION)]); 
     }
 }

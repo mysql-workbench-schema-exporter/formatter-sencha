@@ -1,0 +1,27 @@
+{
+    "export": "sencha-extjs3",
+    "zip": false,
+    "dir": "build",
+    "params": {
+        "language": "english",
+        "namingStrategy": "as-is",
+        "logToConsole": false,
+        "logFile": "",
+        "backupExistingFile": true,
+        "useTabs": false,
+        "indentation": 4,
+        "eolDelimeter": "win",
+        "addGeneratorInfoAsComment": true,
+        "filename": "JS\/%schema%\/%entity%.%extension%",
+        "skipPluralNameChecking": false,
+        "useLoggedStorage": false,
+        "sortTablesAndViews": true,
+        "exportOnlyTableCategorized": "",
+        "enhanceManyToManyDetection": true,
+        "skipManyToManyTables": true,
+        "stripMultipleUnderscores": false,
+        "asIsUserDatatypePrefix": "",
+        "classPrefix": "SysX.App",
+        "parentClass": "SysX.Ui.App"
+    }
+}

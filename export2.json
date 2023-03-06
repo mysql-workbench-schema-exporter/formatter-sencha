@@ -1,0 +1,30 @@
+{
+    "export": "sencha-extjs4",
+    "zip": false,
+    "dir": "build",
+    "params": {
+        "language": "english",
+        "namingStrategy": "as-is",
+        "logToConsole": false,
+        "logFile": "",
+        "backupExistingFile": true,
+        "useTabs": false,
+        "indentation": 4,
+        "eolDelimeter": "win",
+        "addGeneratorInfoAsComment": true,
+        "filename": "model\/%entity%.%extension%",
+        "skipPluralNameChecking": false,
+        "useLoggedStorage": false,
+        "sortTablesAndViews": true,
+        "exportOnlyTableCategorized": "",
+        "enhanceManyToManyDetection": true,
+        "skipManyToManyTables": true,
+        "stripMultipleUnderscores": false,
+        "asIsUserDatatypePrefix": "",
+        "classPrefix": "App.model",
+        "parentClass": "Ext.data.Model",
+        "generateValidation": true,
+        "generateProxy": true,
+        "addIdProperty": false
+    }
+}

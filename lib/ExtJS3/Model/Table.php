@@ -63,35 +63,35 @@ class Table extends BaseTable
 
     public function asModel()
     {
-        $fields = array();
+        $fields = [];
         foreach ($this->getColumns() as $column) {
             $fields[] = $column->asField();
         }
 
-        return $this->getJSObject(array(
+        return $this->getJSObject([
             'id'     => $this->getModelName(),
             'url'    => ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName()),
             'title'  => str_replace('-', ' ', ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName())),
             'fields' => $fields,
-        ));
+        ]);
     }
 
     public function asUI()
     {
-        $columns = array();
-        $forms = array();
+        $columns = [];
+        $forms = [];
         foreach ($this->getColumns() as $column) {
             $columns[] = $column->asColumn();
             $forms[] = $column->asFormItem();
         }
 
-        return $this->getJSObject(array(
+        return $this->getJSObject([
             'columns'    => $columns,
-            'formItems'  => array(
+            'formItems'  => [
                 'title'  => 'Basic Details',
                 'layout' => 'form',
                 'items'  => $forms,
-            ),
-        ));
+            ],
+        ]);
     }
 }

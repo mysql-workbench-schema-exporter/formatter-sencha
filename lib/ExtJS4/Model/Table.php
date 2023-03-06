@@ -77,7 +77,7 @@ class Table extends BaseTable
 
     public function asModel()
     {
-        $result = array('extend' => $this->getParentClass());
+        $result = ['extend' => $this->getParentClass()];
 
         if ($this->getConfig()->get(Formatter::CFG_ADD_IDPROPERTY)) {
             $primaryKeyColumnName = $this->getPrimaryKey();
@@ -119,7 +119,7 @@ class Table extends BaseTable
      */
     protected function getUses()
     {
-        $result = array();
+        $result = [];
         $current = sprintf('%s.%s', $this->getClassPrefix(), $this->getModelName());
 
         // Collect belongsTo uses.
@@ -158,19 +158,19 @@ class Table extends BaseTable
      */
     protected function getBelongsTo()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getTableRelations() as $relation) {
             if (!$relation->isManyToOne()) {
                 // Do not list OneToOne relations.
                 continue;
             }
             $referencedTable = $relation->getReferencedTable();
-            $result[] = array(
+            $result[] = [
                 'model'          => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
                 'associationKey' => lcfirst($referencedTable->getModelName()),
                 'getterName'     => sprintf('get%s', $referencedTable->getModelName()),
                 'setterName'     => sprintf('set%s', $referencedTable->getModelName()),
-            );
+            ];
         }
 
         return $result;
@@ -184,19 +184,19 @@ class Table extends BaseTable
      */
     protected function getHasOne()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getTableRelations() as $relation) {
             // Do not list manyToOne relations.
             if ($relation->isManyToOne()) {
                 continue;
             }
             $referencedTable = $relation->getReferencedTable();
-            $result[] = array(
+            $result[] = [
                 'model'          => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
                 'associationKey' => lcfirst($referencedTable->getModelName()),
                 'getterName'     => sprintf('get%s', $referencedTable->getModelName()),
                 'setterName'     => sprintf('set%s', $referencedTable->getModelName()),
-            );
+            ];
         }
 
         return $result;
@@ -210,14 +210,14 @@ class Table extends BaseTable
      */
     protected function getHasMany()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getTableM2MRelations() as $relation) {
             $referencedTable = $relation['refTable'];
-            $result[] = array(
+            $result[] = [
                 'model'          => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
                 'associationKey' => lcfirst($referencedTable->getModelName()),
                 'name'           => sprintf('get%sStore', $referencedTable->getModelName()),
-            );
+            ];
         }
 
         return $result;
@@ -230,14 +230,14 @@ class Table extends BaseTable
      */
     protected function getFields()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getColumns() as $column) {
             $type = $this->getFormatter()->getDatatypeConverter()->getType($column);
-            $result[] = array(
+            $result[] = [
                 'name'         => $column->getColumnName(),
                 'type'         => $type ? $type : 'auto',
                 'defaultValue' => $column->getDefaultValue(),
-            );
+            ];
         }
 
         return $result;
@@ -266,20 +266,20 @@ class Table extends BaseTable
      */
     protected function getValidations()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getColumns() as $column) {
             if ($column->isNotNull() && !$column->isPrimary()) {
-                $result[] = array(
+                $result[] = [
                     'type'  => 'presence',
                     'field' => $column->getColumnName(),
-                );
+                ];
             }
             if (($len = $column->getLength()) > 0) {
-                $result[] = array(
+                $result[] = [
                     'type'  => 'length',
                     'field' => $column->getColumnName(),
                     'max'   => $len,
-                );
+                ];
             }
         }
 
@@ -294,13 +294,13 @@ class Table extends BaseTable
      */
     protected function getAjaxProxy()
     {
-        return array(
+        return [
             'type'   => 'ajax',
             'url'    => sprintf('/data/%s', strtolower($this->getModelName())),
             'api'    => $this->getApi(),
             'reader' => $this->getJsonReader(),
             'writer' => $this->getJsonWriter(),
-        );
+        ];
     }
 
     /**
@@ -313,12 +313,12 @@ class Table extends BaseTable
     {
         $modelName = strtolower($this->getModelName());
 
-        return array(
+        return [
             'read'    => sprintf('/data/%s', $modelName),
             'update'  => sprintf('/data/%s/update', $modelName),
             'create'  => sprintf('/data/%s/add', $modelName),
             'destroy' => sprintf('/data/%s/destroy', $modelName),
-        );
+        ];
     }
 
     /**
@@ -329,11 +329,11 @@ class Table extends BaseTable
      */
     private function getJsonReader()
     {
-        return array(
+        return [
             'type'            => 'json',
             'root'            => strtolower($this->getModelName()),
             'messageProperty' => 'message',
-        );
+        ];
     }
 
     /**
@@ -344,11 +344,11 @@ class Table extends BaseTable
      */
     private function getJsonWriter()
     {
-        return array(
+        return [
             'type'       => 'json',
             'root'       => strtolower($this->getModelName()),
             'encode'     => true,
             'expandData' => true,
-        );
+        ];
     }
 }
