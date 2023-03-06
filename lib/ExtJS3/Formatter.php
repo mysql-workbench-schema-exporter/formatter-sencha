@@ -35,11 +35,11 @@ class Formatter extends BaseFormatter
     protected function init()
     {
         parent::init();
-        $this->addConfigurations(array(
+        $this->addConfigurations([
             static::CFG_FILENAME        => 'JS/%schema%/%entity%.%extension%',
             static::CFG_CLASS_PREFIX    => 'SysX.App',
             static::CFG_PARENT_CLASS    => 'SysX.Ui.App',
-        ));
+        ]);
     }
 
     /**

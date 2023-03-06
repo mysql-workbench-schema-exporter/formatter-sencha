@@ -37,7 +37,7 @@ class DatatypeConverter extends BaseDatatypeConverter
          * http://docs.sencha.com/extjs/3.4.0/#!/api/Ext.data.Field
          * http://docs.sencha.com/extjs/4.2.0/#!/api/Ext.data.Types
          */
-        $this->register(array(
+        $this->register([
             static::DATATYPE_TINYINT            => 'int',
             static::DATATYPE_SMALLINT           => 'int',
             static::DATATYPE_MEDIUMINT          => 'int',
@@ -97,6 +97,6 @@ class DatatypeConverter extends BaseDatatypeConverter
             static::USERDATATYPE_NUMERIC        => 'int',
             static::USERDATATYPE_DEC            => 'int',
             static::USERDATATYPE_CHARACTER      => 'string',
-        ));
+        ]);
     }
 }

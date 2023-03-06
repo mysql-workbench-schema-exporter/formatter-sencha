@@ -68,12 +68,12 @@ class Table extends BaseTable
             $fields[] = $column->asField();
         }
 
-        return $this->getJSObject(array(
+        return $this->getJSObject([
             'id'     => $this->getModelName(),
             'url'    => ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName()),
             'title'  => str_replace('-', ' ', ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName())),
             'fields' => $fields,
-        ));
+        ]);
     }
 
     public function asUI()
@@ -85,13 +85,13 @@ class Table extends BaseTable
             $forms[] = $column->asFormItem();
         }
 
-        return $this->getJSObject(array(
+        return $this->getJSObject([
             'columns'    => $columns,
-            'formItems'  => array(
+            'formItems'  => [
                 'title'  => 'Basic Details',
                 'layout' => 'form',
                 'items'  => $forms,
-            ),
-        ));
+            ],
+        ]);
     }
 }

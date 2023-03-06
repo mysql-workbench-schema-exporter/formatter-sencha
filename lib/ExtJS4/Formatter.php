@@ -44,14 +44,14 @@ class Formatter extends BaseFormatter
     protected function init()
     {
         parent::init();
-        $this->addConfigurations(array(
+        $this->addConfigurations([
             static::CFG_FILENAME             => 'model/%entity%.%extension%',
             static::CFG_CLASS_PREFIX         => 'App.model',
             static::CFG_PARENT_CLASS         => 'Ext.data.Model',
             static::CFG_GENERATE_VALIDATION  => true,
             static::CFG_GENERATE_PROXY       => true,
             static::CFG_ADD_IDPROPERTY       => false,
-        ));
+        ]);
     }
 
     /**

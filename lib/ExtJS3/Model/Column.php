@@ -35,12 +35,12 @@ class Column extends BaseColumn
 {
     public function asField()
     {
-        return array('name' => $this->getColumnName(), 'type' => $this->getFormatter()->getDatatypeConverter()->getType($this));
+        return ['name' => $this->getColumnName(), 'type' => $this->getFormatter()->getDatatypeConverter()->getType($this)];
     }
 
     public function asColumn()
     {
-        return array('header' => ucwords(str_replace('_', ' ', $this->getColumnName())), 'dataIndex' => $this->getColumnName());
+        return ['header' => ucwords(str_replace('_', ' ', $this->getColumnName())), 'dataIndex' => $this->getColumnName()];
     }
 
     public function asFormItem()
@@ -91,14 +91,14 @@ class Column extends BaseColumn
             $result['mode'] = 'local';
             $result['forceSelection'] = true;
             $result['triggerAction'] = 'all';
-            $result['listeners'] = array('afterrender' => $this->getTable()->getJSObject('function() {this.store.load();}', true, true));
+            $result['listeners'] = ['afterrender' => $this->getTable()->getJSObject('function() {this.store.load();}', true, true)];
             $result['store'] = $this->getTable()->getJSObject(sprintf('new Ext.data.JsonStore(%s);',
-                $this->getTable()->getJSObject(array(
+                $this->getTable()->getJSObject([
                     'id'     => str_replace(' ', '', ucwords(str_replace('_',' ',$local->getReferencedTable()->getRawTableName()))).'Store',
                     'url'    => ZendURLFormatter::fromUnderscoreConnectionToDashConnection($local->getReferencedTable()->getRawTableName()),
                     'root'   => 'data',
-                    'fields' => array('id', 'name'),
-                ), true)
+                    'fields' => ['id', 'name'],
+                ], true)
             ), false, true);
         }
 
