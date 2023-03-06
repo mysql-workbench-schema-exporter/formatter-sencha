@@ -119,7 +119,7 @@ class Table extends BaseTable
      */
     protected function getUses()
     {
-        $result = array();
+        $result = [];
         $current = sprintf('%s.%s', $this->getClassPrefix(), $this->getModelName());
 
         // Collect belongsTo uses.
@@ -158,7 +158,7 @@ class Table extends BaseTable
      */
     protected function getBelongsTo()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getTableRelations() as $relation) {
             if (!$relation->isManyToOne()) {
                 // Do not list OneToOne relations.
@@ -184,7 +184,7 @@ class Table extends BaseTable
      */
     protected function getHasOne()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getTableRelations() as $relation) {
             // Do not list manyToOne relations.
             if ($relation->isManyToOne()) {
@@ -210,7 +210,7 @@ class Table extends BaseTable
      */
     protected function getHasMany()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getTableM2MRelations() as $relation) {
             $referencedTable = $relation['refTable'];
             $result[] = array(
@@ -230,7 +230,7 @@ class Table extends BaseTable
      */
     protected function getFields()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getColumns() as $column) {
             $type = $this->getFormatter()->getDatatypeConverter()->getType($column);
             $result[] = array(
@@ -266,7 +266,7 @@ class Table extends BaseTable
      */
     protected function getValidations()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getColumns() as $column) {
             if ($column->isNotNull() && !$column->isPrimary()) {
                 $result[] = array(

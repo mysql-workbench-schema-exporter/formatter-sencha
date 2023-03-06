@@ -45,7 +45,7 @@ class Column extends BaseColumn
 
     public function asFormItem()
     {
-        $result = array();
+        $result = [];
         // @see http://docs.sencha.com/ext-js/3-4/#!/api/Ext.form.ComboBox-cfg-hiddenName
         if (count($this->getLocalForeignKeys())) {
             $result['hiddenName'] = $this->getColumnName();

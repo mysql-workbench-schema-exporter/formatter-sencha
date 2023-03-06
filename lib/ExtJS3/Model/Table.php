@@ -63,7 +63,7 @@ class Table extends BaseTable
 
     public function asModel()
     {
-        $fields = array();
+        $fields = [];
         foreach ($this->getColumns() as $column) {
             $fields[] = $column->asField();
         }
@@ -78,8 +78,8 @@ class Table extends BaseTable
 
     public function asUI()
     {
-        $columns = array();
-        $forms = array();
+        $columns = [];
+        $forms = [];
         foreach ($this->getColumns() as $column) {
             $columns[] = $column->asColumn();
             $forms[] = $column->asFormItem();
