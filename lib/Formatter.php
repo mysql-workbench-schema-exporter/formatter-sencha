@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2014 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,22 +27,23 @@
 
 namespace MwbExporter\Formatter\Sencha;
 
+use MwbExporter\Configuration\Indentation as IndentationConfiguration;
 use MwbExporter\Formatter\Formatter as BaseFormatter;
-use MwbExporter\Model\Base;
+use MwbExporter\Formatter\Sencha\Configuration\ClassParent as ClassParentConfiguration;
+use MwbExporter\Formatter\Sencha\Configuration\ClassPrefix as ClassPrefixConfiguration;
 
 abstract class Formatter extends BaseFormatter
 {
-    const CFG_CLASS_PREFIX   = 'classPrefix';
-    const CFG_PARENT_CLASS   = 'parentClass';
-
     protected function init()
     {
         parent::init();
-        $this->addConfigurations([
-            static::CFG_INDENTATION     => 4,
-            static::CFG_CLASS_PREFIX    => '',
-            static::CFG_PARENT_CLASS    => '',
-        ]);
+        $this->getConfigurations()
+            ->add(new ClassParentConfiguration())
+            ->add(new ClassPrefixConfiguration())
+            ->merge([
+                IndentationConfiguration::class => 4,
+            ])
+        ;
     }
 
     public function getVersion()

@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2014 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
  * Copyright (c) 2013 WitteStier <development@wittestier.nl>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,15 +28,17 @@
 
 namespace MwbExporter\Formatter\Sencha\ExtJS4;
 
+use MwbExporter\Configuration\Filename as FilenameConfiguration;
+use MwbExporter\Formatter\Sencha\Configuration\ClassParent as ClassParentConfiguration;
+use MwbExporter\Formatter\Sencha\Configuration\ClassPrefix as ClassPrefixConfiguration;
+use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\IdProperty as IdPropertyConfiguration;
+use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\Proxy as ProxyConfiguration;
+use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\Validation as ValidationConfiguration;
 use MwbExporter\Formatter\Sencha\Formatter as BaseFormatter;
 use MwbExporter\Model\Base;
 
 class Formatter extends BaseFormatter
 {
-    const CFG_GENERATE_VALIDATION    = 'generateValidation';
-    const CFG_GENERATE_PROXY         = 'generateProxy';
-    const CFG_ADD_IDPROPERTY         = 'addIdProperty';
-
     /**
      * (non-PHPdoc)
      * @see \MwbExporter\Formatter\Formatter::init()
@@ -44,14 +46,16 @@ class Formatter extends BaseFormatter
     protected function init()
     {
         parent::init();
-        $this->addConfigurations([
-            static::CFG_FILENAME             => 'model/%entity%.%extension%',
-            static::CFG_CLASS_PREFIX         => 'App.model',
-            static::CFG_PARENT_CLASS         => 'Ext.data.Model',
-            static::CFG_GENERATE_VALIDATION  => true,
-            static::CFG_GENERATE_PROXY       => true,
-            static::CFG_ADD_IDPROPERTY       => false,
-        ]);
+        $this->getConfigurations()
+            ->add(new ValidationConfiguration())
+            ->add(new ProxyConfiguration())
+            ->add(new IdPropertyConfiguration())
+            ->merge([
+                FilenameConfiguration::class => 'model/%entity%.%extension%',
+                ClassPrefixConfiguration::class => 'App.model',
+                ClassParentConfiguration::class => 'Ext.data.Model',
+            ])
+        ;
     }
 
     /**

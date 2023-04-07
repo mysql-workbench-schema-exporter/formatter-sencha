@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2014 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,13 @@
 
 namespace MwbExporter\Formatter\Sencha\ExtJS3\Model;
 
-use MwbExporter\Model\Column as BaseColumn;
-use MwbExporter\Helper\ZendURLFormatter;
 use MwbExporter\Formatter\DatatypeConverter;
+use MwbExporter\Helper\ZendURLFormatter;
+use MwbExporter\Model\Column as BaseColumn;
 
+/**
+ * @method \MwbExporter\Formatter\Sencha\ExtJS3\Model\Table getTable()
+ */
 class Column extends BaseColumn
 {
     public function asField()
@@ -57,13 +60,11 @@ class Column extends BaseColumn
             case $this->isPrimary():
                 $type = 'hidden';
                 break;
-
             case $this->getColumnType() === DatatypeConverter::DATATYPE_DATETIME:
             case $this->getColumnType() === DatatypeConverter::DATATYPE_DATETIME_F:
             case $this->getColumnType() === DatatypeConverter::DATATYPE_TIMESTAMP:
                 $type = 'xdatetime';
                 break;
-
             case $this->getColumnType() === DatatypeConverter::DATATYPE_TINYTEXT:
             case $this->getColumnType() === DatatypeConverter::DATATYPE_MEDIUMTEXT:
             case $this->getColumnType() === DatatypeConverter::DATATYPE_LONGTEXT:
@@ -71,13 +72,11 @@ class Column extends BaseColumn
                 $type = 'htmleditor';
                 $anchor = '100%';
                 break;
-
             case count($this->getLocalForeignKeys()):
                 $type = 'combo';
                 break;
-
             default:
-                $type = 'textfield'; 
+                $type = 'textfield';
         }
         $result['xtype'] = $type;
         $result['fieldLabel'] = ucwords(str_replace('_', ' ', $this->getColumnName()));
@@ -92,11 +91,12 @@ class Column extends BaseColumn
             $result['forceSelection'] = true;
             $result['triggerAction'] = 'all';
             $result['listeners'] = ['afterrender' => $this->getTable()->getJSObject('function() {this.store.load();}', true, true)];
-            $result['store'] = $this->getTable()->getJSObject(sprintf('new Ext.data.JsonStore(%s);',
+            $result['store'] = $this->getTable()->getJSObject(sprintf(
+                'new Ext.data.JsonStore(%s);',
                 $this->getTable()->getJSObject([
-                    'id'     => str_replace(' ', '', ucwords(str_replace('_',' ',$local->getReferencedTable()->getRawTableName()))).'Store',
-                    'url'    => ZendURLFormatter::fromUnderscoreConnectionToDashConnection($local->getReferencedTable()->getRawTableName()),
-                    'root'   => 'data',
+                    'id' => str_replace(' ', '', ucwords(str_replace('_', ' ', $local->getReferencedTable()->getRawTableName()))).'Store',
+                    'url' => ZendURLFormatter::fromUnderscoreConnectionToDashConnection($local->getReferencedTable()->getRawTableName()),
+                    'root' => 'data',
                     'fields' => ['id', 'name'],
                 ], true)
             ), false, true);

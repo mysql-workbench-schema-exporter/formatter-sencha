@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2014 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,12 @@
 
 namespace MwbExporter\Formatter\Sencha\ExtJS3\Model;
 
+use MwbExporter\Configuration\Comment as CommentConfiguration;
 use MwbExporter\Formatter\Sencha\Model\Table as BaseTable;
 use MwbExporter\Formatter\Sencha\ExtJS3\Formatter;
-use MwbExporter\Writer\WriterInterface;
-use MwbExporter\Helper\ZendURLFormatter;
 use MwbExporter\Helper\Comment;
+use MwbExporter\Helper\ZendURLFormatter;
+use MwbExporter\Writer\WriterInterface;
 
 class Table extends BaseTable
 {
@@ -41,7 +42,7 @@ class Table extends BaseTable
             $writer
                 ->open($this->getTableFileName())
                 ->writeCallback(function(WriterInterface $writer, Table $_this = null) {
-                    if ($_this->getConfig()->get(Formatter::CFG_ADD_COMMENT)) {
+                    if ($_this->getConfig(CommentConfiguration::class)->getValue()) {
                         $writer
                             ->write($_this->getFormatter()->getComment(Comment::FORMAT_JS))
                             ->write('')
@@ -69,9 +70,9 @@ class Table extends BaseTable
         }
 
         return $this->getJSObject([
-            'id'     => $this->getModelName(),
-            'url'    => ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName()),
-            'title'  => str_replace('-', ' ', ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName())),
+            'id' => $this->getModelName(),
+            'url' => ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName()),
+            'title' => str_replace('-', ' ', ZendURLFormatter::fromCamelCaseToDashConnection($this->getModelName())),
             'fields' => $fields,
         ]);
     }
@@ -86,11 +87,11 @@ class Table extends BaseTable
         }
 
         return $this->getJSObject([
-            'columns'    => $columns,
-            'formItems'  => [
-                'title'  => 'Basic Details',
+            'columns' => $columns,
+            'formItems' => [
+                'title' => 'Basic Details',
                 'layout' => 'form',
-                'items'  => $forms,
+                'items' => $forms,
             ],
         ]);
     }

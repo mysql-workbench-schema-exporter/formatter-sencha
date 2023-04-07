@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2014 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
  * Copyright (c) 2013 WitteStier <development@wittestier.nl>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,10 +28,14 @@
 
 namespace MwbExporter\Formatter\Sencha\ExtJS4\Model;
 
+use MwbExporter\Configuration\Comment as CommentConfiguration;
+use MwbExporter\Configuration\M2MSkip as M2MSkipConfiguration;
+use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\IdProperty as IdPropertyConfiguration;
+use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\Proxy as ProxyConfiguration;
+use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\Validation as ValidationConfiguration;
 use MwbExporter\Formatter\Sencha\Model\Table as BaseTable;
-use MwbExporter\Formatter\Sencha\ExtJS4\Formatter;
-use MwbExporter\Writer\WriterInterface;
 use MwbExporter\Helper\Comment;
+use MwbExporter\Writer\WriterInterface;
 
 class Table extends BaseTable
 {
@@ -40,21 +44,20 @@ class Table extends BaseTable
         switch (true) {
             case $this->isExternal():
                 return self::WRITE_EXTERNAL;
-
-            case $this->getConfig()->get(Formatter::CFG_SKIP_M2M_TABLES) && $this->isManyToMany():
+            case $this->getConfig(M2MSkipConfiguration::class)->getValue() && $this->isManyToMany():
                 return self::WRITE_M2M;
-
             default:
                 $writer->open($this->getTableFileName());
                 $this->writeBody($writer);
                 $writer->close();
+
                 return self::WRITE_OK;
         }
     }
 
     /**
      * Write model body code.
-     * 
+     *
      * @param \MwbExporter\Writer\WriterInterface $writer
      * @return \MwbExporter\Formatter\Sencha\ExtJS4\Model\Table
      */
@@ -62,7 +65,7 @@ class Table extends BaseTable
     {
         $writer
             ->writeCallback(function(WriterInterface $writer, Table $_this = null) {
-                if ($_this->getConfig()->get(Formatter::CFG_ADD_COMMENT)) {
+                if ($_this->getConfig(CommentConfiguration::class)->getValue()) {
                     $writer
                         ->write($_this->getFormatter()->getComment(Comment::FORMAT_JS))
                         ->write('')
@@ -79,7 +82,7 @@ class Table extends BaseTable
     {
         $result = ['extend' => $this->getParentClass()];
 
-        if ($this->getConfig()->get(Formatter::CFG_ADD_IDPROPERTY)) {
+        if ($this->getConfig(IdPropertyConfiguration::class)->getValue()) {
             $primaryKeyColumnName = $this->getPrimaryKey();
             if ($primaryKeyColumnName) {
                 $result['idProperty'] = $primaryKeyColumnName;
@@ -101,10 +104,10 @@ class Table extends BaseTable
         if (count($data = $this->getFields())) {
             $result['fields'] = $data;
         }
-        if ($this->getConfig()->get(Formatter::CFG_GENERATE_VALIDATION) && count($data = $this->getValidations())) {
+        if ($this->getConfig(ValidationConfiguration::class)->getValue() && count($data = $this->getValidations())) {
             $result['validations'] = $data;
         }
-        if ($this->getConfig()->get(Formatter::CFG_GENERATE_PROXY) && count($data = $this->getAjaxProxy())) {
+        if ($this->getConfig(ProxyConfiguration::class)->getValue() && count($data = $this->getAjaxProxy())) {
             $result['proxy'] = $data;
         }
 
@@ -166,10 +169,10 @@ class Table extends BaseTable
             }
             $referencedTable = $relation->getReferencedTable();
             $result[] = [
-                'model'          => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
+                'model' => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
                 'associationKey' => lcfirst($referencedTable->getModelName()),
-                'getterName'     => sprintf('get%s', $referencedTable->getModelName()),
-                'setterName'     => sprintf('set%s', $referencedTable->getModelName()),
+                'getterName' => sprintf('get%s', $referencedTable->getModelName()),
+                'setterName' => sprintf('set%s', $referencedTable->getModelName()),
             ];
         }
 
@@ -192,10 +195,10 @@ class Table extends BaseTable
             }
             $referencedTable = $relation->getReferencedTable();
             $result[] = [
-                'model'          => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
+                'model' => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
                 'associationKey' => lcfirst($referencedTable->getModelName()),
-                'getterName'     => sprintf('get%s', $referencedTable->getModelName()),
-                'setterName'     => sprintf('set%s', $referencedTable->getModelName()),
+                'getterName' => sprintf('get%s', $referencedTable->getModelName()),
+                'setterName' => sprintf('set%s', $referencedTable->getModelName()),
             ];
         }
 
@@ -214,9 +217,9 @@ class Table extends BaseTable
         foreach ($this->getTableM2MRelations() as $relation) {
             $referencedTable = $relation['refTable'];
             $result[] = [
-                'model'          => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
+                'model' => sprintf('%s.%s', $this->getClassPrefix(), $referencedTable->getModelName()),
                 'associationKey' => lcfirst($referencedTable->getModelName()),
-                'name'           => sprintf('get%sStore', $referencedTable->getModelName()),
+                'name' => sprintf('get%sStore', $referencedTable->getModelName()),
             ];
         }
 
@@ -234,8 +237,8 @@ class Table extends BaseTable
         foreach ($this->getColumns() as $column) {
             $type = $this->getFormatter()->getDatatypeConverter()->getType($column);
             $result[] = [
-                'name'         => $column->getColumnName(),
-                'type'         => $type ? $type : 'auto',
+                'name' => $column->getColumnName(),
+                'type' => $type ? $type : 'auto',
                 'defaultValue' => $column->getDefaultValue(),
             ];
         }
@@ -270,15 +273,15 @@ class Table extends BaseTable
         foreach ($this->getColumns() as $column) {
             if ($column->isNotNull() && !$column->isPrimary()) {
                 $result[] = [
-                    'type'  => 'presence',
+                    'type' => 'presence',
                     'field' => $column->getColumnName(),
                 ];
             }
             if (($len = $column->getLength()) > 0) {
                 $result[] = [
-                    'type'  => 'length',
+                    'type' => 'length',
                     'field' => $column->getColumnName(),
-                    'max'   => $len,
+                    'max' => $len,
                 ];
             }
         }
@@ -295,9 +298,9 @@ class Table extends BaseTable
     protected function getAjaxProxy()
     {
         return [
-            'type'   => 'ajax',
-            'url'    => sprintf('/data/%s', strtolower($this->getModelName())),
-            'api'    => $this->getApi(),
+            'type' => 'ajax',
+            'url' => sprintf('/data/%s', strtolower($this->getModelName())),
+            'api' => $this->getApi(),
             'reader' => $this->getJsonReader(),
             'writer' => $this->getJsonWriter(),
         ];
@@ -314,9 +317,9 @@ class Table extends BaseTable
         $modelName = strtolower($this->getModelName());
 
         return [
-            'read'    => sprintf('/data/%s', $modelName),
-            'update'  => sprintf('/data/%s/update', $modelName),
-            'create'  => sprintf('/data/%s/add', $modelName),
+            'read' => sprintf('/data/%s', $modelName),
+            'update' => sprintf('/data/%s/update', $modelName),
+            'create' => sprintf('/data/%s/add', $modelName),
             'destroy' => sprintf('/data/%s/destroy', $modelName),
         ];
     }
@@ -330,8 +333,8 @@ class Table extends BaseTable
     private function getJsonReader()
     {
         return [
-            'type'            => 'json',
-            'root'            => strtolower($this->getModelName()),
+            'type' => 'json',
+            'root' => strtolower($this->getModelName()),
             'messageProperty' => 'message',
         ];
     }
@@ -345,9 +348,9 @@ class Table extends BaseTable
     private function getJsonWriter()
     {
         return [
-            'type'       => 'json',
-            'root'       => strtolower($this->getModelName()),
-            'encode'     => true,
+            'type' => 'json',
+            'root' => strtolower($this->getModelName()),
+            'encode' => true,
             'expandData' => true,
         ];
     }

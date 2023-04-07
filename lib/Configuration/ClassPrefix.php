@@ -3,8 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +24,22 @@
  * THE SOFTWARE.
  */
 
-namespace MwbExporter\Formatter\Sencha\ExtJS3;
+namespace MwbExporter\Formatter\Sencha\Configuration;
 
-use MwbExporter\Formatter\Sencha\DatatypeConverter as BaseDatatypeConverter;
+use MwbExporter\Configuration\Configuration;
 
-class DatatypeConverter extends BaseDatatypeConverter
+/**
+ * Class prefix for generated object.
+ *
+ * @author Toha <tohenk@yahoo.com>
+ * @config classPrefix
+ * @label Class prefix
+ */
+class ClassPrefix extends Configuration
 {
+    protected function initialize()
+    {
+        $this->category = 'extjsConfiguration';
+        $this->defaultValue = '';
+    }
 }

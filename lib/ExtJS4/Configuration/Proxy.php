@@ -3,8 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +24,22 @@
  * THE SOFTWARE.
  */
 
-namespace MwbExporter\Formatter\Sencha\ExtJS3;
+namespace MwbExporter\Formatter\Sencha\ExtJS4\Configuration;
 
-use MwbExporter\Formatter\Sencha\DatatypeConverter as BaseDatatypeConverter;
+use MwbExporter\Configuration\Configuration;
 
-class DatatypeConverter extends BaseDatatypeConverter
+/**
+ * Generate ajax proxy.
+ *
+ * @author Toha <tohenk@yahoo.com>
+ * @config generateProxy
+ * @label Generate proxy
+ */
+class Proxy extends Configuration
 {
+    protected function initialize()
+    {
+        $this->category = 'extjsConfiguration';
+        $this->defaultValue = true;
+    }
 }

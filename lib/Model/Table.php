@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2014 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,20 +27,23 @@
 
 namespace MwbExporter\Formatter\Sencha\Model;
 
-use MwbExporter\Model\Table as BaseTable;
+use MwbExporter\Configuration\Indentation as IndentationConfiguration;
+use MwbExporter\Formatter\Sencha\Configuration\ClassParent as ClassParentConfiguration;
+use MwbExporter\Formatter\Sencha\Configuration\ClassPrefix as ClassPrefixConfiguration;
 use MwbExporter\Formatter\Sencha\Formatter;
+use MwbExporter\Model\Table as BaseTable;
 use MwbExporter\Object\JS;
 
 class Table extends BaseTable
 {
     public function getClassPrefix()
     {
-        return $this->translateVars($this->getConfig()->get(Formatter::CFG_CLASS_PREFIX));
+        return $this->translateVars($this->getConfig(ClassPrefixConfiguration::class)->getValue());
     }
 
     public function getParentClass()
     {
-        return $this->translateVars($this->getConfig()->get(Formatter::CFG_PARENT_CLASS));
+        return $this->translateVars($this->getConfig(ClassParentConfiguration::class)->getValue());
     }
 
     /**
@@ -53,6 +56,9 @@ class Table extends BaseTable
      */
     public function getJSObject($content, $multiline = true, $raw = false)
     {
-        return new JS($content, ['multiline' => $multiline, 'raw' => $raw, 'indent' => $this->getConfig()->get(Formatter::CFG_INDENTATION)]); 
+        /** @var \MwbExporter\Configuration\Indentation $indentation */
+        $indentation = $this->getConfig(IndentationConfiguration::class);
+
+        return new JS($content, ['multiline' => $multiline, 'raw' => $raw, 'indent' => strlen($indentation->getIndentation(1))]);
     }
 }

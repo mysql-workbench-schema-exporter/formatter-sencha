@@ -3,8 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2023 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +24,23 @@
  * THE SOFTWARE.
  */
 
-namespace MwbExporter\Formatter\Sencha\ExtJS3;
+namespace MwbExporter\Formatter\Sencha\ExtJS4\Configuration;
 
-use MwbExporter\Formatter\Sencha\DatatypeConverter as BaseDatatypeConverter;
+use MwbExporter\Configuration\Configuration;
 
-class DatatypeConverter extends BaseDatatypeConverter
+/**
+ * Add the primary key of a table as the model's idProperty.
+ * ([Reference](http://docs.sencha.com/extjs/4.2.3/#!/api/Ext.data.Model-cfg-idProperty)).
+ *
+ * @author Toha <tohenk@yahoo.com>
+ * @config addIdProperty
+ * @label Add id property
+ */
+class IdProperty extends Configuration
 {
+    protected function initialize()
+    {
+        $this->category = 'extjsConfiguration';
+        $this->defaultValue = false;
+    }
 }
