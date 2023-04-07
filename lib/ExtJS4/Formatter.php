@@ -54,7 +54,7 @@ class Formatter extends BaseFormatter
                 FilenameConfiguration::class => 'model/%entity%.%extension%',
                 ClassPrefixConfiguration::class => 'App.model',
                 ClassParentConfiguration::class => 'Ext.data.Model',
-            ])
+            ], true)
         ;
     }
 
@@ -74,5 +74,15 @@ class Formatter extends BaseFormatter
     public function getTitle()
     {
         return 'Sencha ExtJS4 Model';
+    }
+
+    /**
+     * Get configuration scope.
+     *
+     * @return string
+     */
+    public static function getScope()
+    {
+        return 'Sencha ExtJS4';
     }
 }

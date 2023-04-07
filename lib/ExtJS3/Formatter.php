@@ -43,7 +43,7 @@ class Formatter extends BaseFormatter
                 FilenameConfiguration::class => 'JS/%schema%/%entity%.%extension%',
                 ClassPrefixConfiguration::class => 'SysX.App',
                 ClassParentConfiguration::class => 'SysX.Ui.App',
-            ])
+            ], true)
         ;
     }
 
@@ -77,5 +77,15 @@ class Formatter extends BaseFormatter
     public function getTitle()
     {
         return 'Sencha ExtJS3 Model';
+    }
+
+    /**
+     * Get configuration scope.
+     *
+     * @return string
+     */
+    public static function getScope()
+    {
+        return 'Sencha ExtJS3';
     }
 }

@@ -42,7 +42,7 @@ abstract class Formatter extends BaseFormatter
             ->add(new ClassPrefixConfiguration())
             ->merge([
                 IndentationConfiguration::class => 4,
-            ])
+            ], true)
         ;
     }
 
@@ -63,5 +63,20 @@ abstract class Formatter extends BaseFormatter
     public function getFileExtension()
     {
         return 'js';
+    }
+
+    public static function getDocDir()
+    {
+        return __DIR__.'/../docs';
+    }
+
+    /**
+     * Get configuration scope.
+     *
+     * @return string
+     */
+    public static function getScope()
+    {
+        return 'Sencha ExtJS Global';
     }
 }
