@@ -1,9 +1,9 @@
-# README
-
 ![Build Status](https://github.com/mysql-workbench-schema-exporter/sencha-exporter/actions/workflows/continuous-integration.yml/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/mysql-workbench-schema-exporter/sencha-exporter/v/stable.svg)](https://packagist.org/packages/mysql-workbench-schema-exporter/sencha-exporter)
 [![Total Downloads](https://poser.pugx.org/mysql-workbench-schema-exporter/sencha-exporter/downloads.svg)](https://packagist.org/packages/mysql-workbench-schema-exporter/sencha-exporter) 
 [![License](https://poser.pugx.org/mysql-workbench-schema-exporter/sencha-exporter/license.svg)](https://packagist.org/packages/mysql-workbench-schema-exporter/sencha-exporter)
+
+# README
 
 This is an exporter to convert [MySQL Workbench](http://www.mysql.com/products/workbench/) Models (\*.mwb) to a Sencha ExtJS3 and ExtJS4 Schema.
 
