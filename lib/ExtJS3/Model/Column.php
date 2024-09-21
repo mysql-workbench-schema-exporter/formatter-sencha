@@ -92,7 +92,7 @@ class Column extends BaseColumn
             $result['triggerAction'] = 'all';
             $result['listeners'] = ['afterrender' => $this->getTable()->getJSObject('function() {this.store.load();}', true, true)];
             $result['store'] = $this->getTable()->getJSObject(sprintf(
-                'new Ext.data.JsonStore(%s);',
+                'new Ext.data.JsonStore(%s)',
                 $this->getTable()->getJSObject([
                     'id' => str_replace(' ', '', ucwords(str_replace('_', ' ', $local->getReferencedTable()->getRawTableName()))).'Store',
                     'url' => ZendURLFormatter::fromUnderscoreConnectionToDashConnection($local->getReferencedTable()->getRawTableName()),
