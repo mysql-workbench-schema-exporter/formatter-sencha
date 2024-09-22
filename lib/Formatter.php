@@ -31,6 +31,7 @@ use MwbExporter\Configuration\Indentation as IndentationConfiguration;
 use MwbExporter\Formatter\Formatter as BaseFormatter;
 use MwbExporter\Formatter\Sencha\Configuration\ClassParent as ClassParentConfiguration;
 use MwbExporter\Formatter\Sencha\Configuration\ClassPrefix as ClassPrefixConfiguration;
+use MwbExporter\Helper\Comment;
 
 abstract class Formatter extends BaseFormatter
 {
@@ -44,6 +45,7 @@ abstract class Formatter extends BaseFormatter
                 IndentationConfiguration::class => 4,
             ], true)
         ;
+        $this->commentFormat = Comment::FORMAT_JS;
     }
 
     public function getVersion()

@@ -35,7 +35,6 @@ use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\IdProperty as IdPropertyCo
 use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\Proxy as ProxyConfiguration;
 use MwbExporter\Formatter\Sencha\ExtJS4\Configuration\Validation as ValidationConfiguration;
 use MwbExporter\Formatter\Sencha\Model\Table as BaseTable;
-use MwbExporter\Helper\Comment;
 use MwbExporter\Writer\WriterInterface;
 
 class Table extends BaseTable
@@ -70,15 +69,21 @@ class Table extends BaseTable
                 $header = $this->getConfig(HeaderConfiguration::class);
                 if ($content = $header->getHeader()) {
                     $writer
-                        ->write($_this->getFormatter()->getFormattedComment($content, Comment::FORMAT_JS, null))
+                        ->commentStart()
+                            ->write($content)
+                        ->commentEnd()
                         ->write('')
                     ;
                 }
                 if ($_this->getConfig(CommentConfiguration::class)->getValue()) {
-                    $writer
-                        ->write($_this->getFormatter()->getComment(Comment::FORMAT_JS))
-                        ->write('')
-                    ;
+                    if ($content = $_this->getFormatter()->getComment(null)) {
+                        $writer
+                            ->commentStart()
+                                ->write($content)
+                            ->commentEnd()
+                            ->write('')
+                        ;
+                    }
                 }
             })
             ->write("Ext.define('%s', %s);", $this->getClassPrefix().'.'.$this->getModelName(), $this->asModel())
