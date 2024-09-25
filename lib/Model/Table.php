@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2024 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,8 @@ namespace MwbExporter\Formatter\Sencha\Model;
 use MwbExporter\Configuration\Indentation as IndentationConfiguration;
 use MwbExporter\Formatter\Sencha\Configuration\ClassParent as ClassParentConfiguration;
 use MwbExporter\Formatter\Sencha\Configuration\ClassPrefix as ClassPrefixConfiguration;
-use MwbExporter\Formatter\Sencha\Formatter;
 use MwbExporter\Model\Table as BaseTable;
-use MwbExporter\Object\JS;
+use NTLAB\Object\JS;
 
 class Table extends BaseTable
 {
@@ -52,13 +51,13 @@ class Table extends BaseTable
      * @param mixed $content    Object content
      * @param bool  $multiline  Multiline result
      * @param bool  $raw        Is raw object
-     * @return \MwbExporter\Object\JS
+     * @return \NTLAB\Object\JS
      */
     public function getJSObject($content, $multiline = true, $raw = false)
     {
         /** @var \MwbExporter\Configuration\Indentation $indentation */
         $indentation = $this->getConfig(IndentationConfiguration::class);
 
-        return new JS($content, ['multiline' => $multiline, 'raw' => $raw, 'indent' => strlen($indentation->getIndentation(1))]);
+        return new JS($content, ['inline' => !$multiline, 'raw' => $raw, 'indentation' => $indentation->getIndentation(1)]);
     }
 }

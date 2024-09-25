@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2024 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ namespace MwbExporter\Formatter\Sencha\ExtJS3\Model;
 use MwbExporter\Configuration\Comment as CommentConfiguration;
 use MwbExporter\Configuration\Header as HeaderConfiguration;
 use MwbExporter\Formatter\Sencha\Model\Table as BaseTable;
-use MwbExporter\Helper\Comment;
 use MwbExporter\Helper\ZendURLFormatter;
 use MwbExporter\Writer\WriterInterface;
 
@@ -46,15 +45,17 @@ class Table extends BaseTable
                     $header = $this->getConfig(HeaderConfiguration::class);
                     if ($content = $header->getHeader()) {
                         $writer
-                            ->write($_this->getFormatter()->getFormattedComment($content, Comment::FORMAT_JS, null))
+                            ->writeComment($content)
                             ->write('')
                         ;
                     }
                     if ($_this->getConfig(CommentConfiguration::class)->getValue()) {
-                        $writer
-                            ->write($_this->getFormatter()->getComment(Comment::FORMAT_JS))
-                            ->write('')
-                        ;
+                        if ($content = $_this->getFormatter()->getComment(null)) {
+                            $writer
+                                ->writeComment($content)
+                                ->write('')
+                            ;
+                        }
                     }
                 })
                 ->write('%s.%s = Ext.extend(%s, %s);', $this->getClassPrefix(), $this->getModelName(), $this->getParentClass(), $this->asModel())

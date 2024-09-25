@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2024 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -92,7 +92,7 @@ class Column extends BaseColumn
             $result['triggerAction'] = 'all';
             $result['listeners'] = ['afterrender' => $this->getTable()->getJSObject('function() {this.store.load();}', true, true)];
             $result['store'] = $this->getTable()->getJSObject(sprintf(
-                'new Ext.data.JsonStore(%s);',
+                'new Ext.data.JsonStore(%s)',
                 $this->getTable()->getJSObject([
                     'id' => str_replace(' ', '', ucwords(str_replace('_', ' ', $local->getReferencedTable()->getRawTableName()))).'Store',
                     'url' => ZendURLFormatter::fromUnderscoreConnectionToDashConnection($local->getReferencedTable()->getRawTableName()),

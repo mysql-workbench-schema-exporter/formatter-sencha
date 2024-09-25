@@ -4,7 +4,7 @@
  * The MIT License
  *
  * Copyright (c) 2012 Allan Sun <sunajia@gmail.com>
- * Copyright (c) 2012-2023 Toha <tohenk@yahoo.com>
+ * Copyright (c) 2012-2024 Toha <tohenk@yahoo.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ use MwbExporter\Configuration\Indentation as IndentationConfiguration;
 use MwbExporter\Formatter\Formatter as BaseFormatter;
 use MwbExporter\Formatter\Sencha\Configuration\ClassParent as ClassParentConfiguration;
 use MwbExporter\Formatter\Sencha\Configuration\ClassPrefix as ClassPrefixConfiguration;
+use MwbExporter\Helper\Comment;
 
 abstract class Formatter extends BaseFormatter
 {
@@ -44,6 +45,7 @@ abstract class Formatter extends BaseFormatter
                 IndentationConfiguration::class => 4,
             ], true)
         ;
+        $this->commentFormat = Comment::FORMAT_JS;
     }
 
     public function getVersion()
