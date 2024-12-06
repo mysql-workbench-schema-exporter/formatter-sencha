@@ -64,7 +64,7 @@ class Table extends BaseTable
     public function writeBody(WriterInterface $writer)
     {
         $writer
-            ->writeCallback(function(WriterInterface $writer, Table $_this = null) {
+            ->writeCallback(function(WriterInterface $writer, ?Table $_this = null) {
                 /** @var \MwbExporter\Configuration\Header $header */
                 $header = $this->getConfig(HeaderConfiguration::class);
                 if ($content = $header->getHeader()) {

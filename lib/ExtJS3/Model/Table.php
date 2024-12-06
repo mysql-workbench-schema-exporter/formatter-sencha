@@ -40,7 +40,7 @@ class Table extends BaseTable
         if (!$this->isExternal()) {
             $writer
                 ->open($this->getTableFileName())
-                ->writeCallback(function(WriterInterface $writer, Table $_this = null) {
+                ->writeCallback(function(WriterInterface $writer, ?Table $_this = null) {
                     /** @var \MwbExporter\Configuration\Header $header */
                     $header = $this->getConfig(HeaderConfiguration::class);
                     if ($content = $header->getHeader()) {
